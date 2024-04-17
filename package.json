@@ -1,0 +1,19 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "hexlet project-2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vladislav-gh-dump/frontend-project-46.git"
+  },
+  "author": "vladislav",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vladislav-gh-dump/frontend-project-46/issues"
+  },
+  "homepage": "https://github.com/vladislav-gh-dump/frontend-project-46#readme"
+}
