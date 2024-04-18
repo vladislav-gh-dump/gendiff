@@ -6,8 +6,7 @@ export default [
       "@stylistic/js": stylisticJs
     },
     rules: {
-      "@stylistic/js/indent": ["error", 2],
-      "no-console": "off",
+      "@stylistic/js/indent": ["error", 2]
     }
   }
 ]
