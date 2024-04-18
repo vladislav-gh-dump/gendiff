@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
+import parseFiles from "../src/parse-files.js";
 
 const program = new Command();
 
@@ -11,7 +12,8 @@ program
 
 program
   .argument("<filepath1>")
-  .argument("<filepath2>");
+  .argument("<filepath2>")
+  .action(parseFiles);
 
 program
   .option("-f, --format [type]", "output format");
