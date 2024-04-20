@@ -6,5 +6,5 @@ export default (filepath1, filepath2) => {
   const data1 = JSON.parse(fs.readFileSync(path.resolve(filepath1)));
   const data2 = JSON.parse(fs.readFileSync(path.resolve(filepath2)));
   
-  console.log(compareFiles(data1, data2));
+  return compareFiles(data1, data2);
 };
