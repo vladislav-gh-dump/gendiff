@@ -13,7 +13,10 @@ program
 program
   .argument("<filepath1>")
   .argument("<filepath2>")
-  .action(parseFiles);
+  .action((filepath1, filepath2) => {
+    const parseResult = parseFiles(filepath1, filepath2);
+    console.log(parseResult);
+  });
 
 program
   .option("-f, --format [type]", "output format");
