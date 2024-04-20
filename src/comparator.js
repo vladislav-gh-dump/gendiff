@@ -1,4 +1,9 @@
-export default (object1, object2) => {
+import fs from "fs";
+import path from "path";
+import parseFile from "./parsers.js";
+
+
+const compareObjects = (object1, object2) => {
   const commonObject = { ...object1, ...object2 };
   const sortedKeys = Object.keys(commonObject).sort();
 
@@ -30,4 +35,12 @@ export default (object1, object2) => {
   });
 
   return `{\n${output}}`;
+};
+
+
+export default (filepath1, filepath2) => {
+  const object1 = parseFile(filepath1);
+  const object2 = parseFile(filepath2);
+  
+  return compareObjects(object1, object2);
 };
