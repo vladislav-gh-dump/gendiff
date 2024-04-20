@@ -3,3 +3,6 @@ lint:
 
 publish:
 	npm publish --dry-run
+
+install: install-deps
+	npx simple-git-hooks
