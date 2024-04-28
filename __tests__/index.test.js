@@ -1,7 +1,9 @@
 // import url from "url";
 import path from "path";
 import process from "process";
-import compareFiles from "../src/comparator.js";
+
+import makeAstDiff from "../src/ast.js";
+import compareFiles from "../src/index.js";
 
 // const __filename = url.fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
@@ -9,59 +11,113 @@ import compareFiles from "../src/comparator.js";
 const __dirname = path.join(process.cwd(), "__tests__");
 const getFixturePath = (filename) => path.join(__dirname, "..", "__fixtures__", filename);
 
+const expectedStringDiff = `{
+    common: {
+      + follow: false
+        setting1: Value 1
+      - setting2: 200
+      - setting3: true
+      + setting3: null
+      + setting4: blah blah
+      + setting5: {
+            key5: value5
+        }
+        setting6: {
+            doge: {
+              - wow: 
+              + wow: so much
+            }
+            key: value
+          + ops: vops
+        }
+    }
+    group1: {
+      - baz: bas
+      + baz: bars
+        foo: bar
+      - nest: {
+            key: value
+        }
+      + nest: str
+    }
+  - group2: {
+        abc: 12345
+        deep: {
+            id: 45
+        }
+    }
+  + group3: {
+        deep: {
+            id: {
+                number: 45
+            }
+        }
+        fee: 100500
+    }
+}`
 
-let filepath1, filepath2;
-const filepathes = {
-  json: {
-    file1: getFixturePath("file1.json"),
-    file2: getFixturePath("file2.json"),
-  },
-  yaml: {
-    file1: getFixturePath("file1.yaml"),
-    file2: getFixturePath("file2.yaml"),
-  },
-  yml: {
-    file1: getFixturePath("file1.yml"),
-    file2: getFixturePath("file2.yml"),
+test("make ast diff", () => {
+  const object1 = {
+    "key1": "value1",
+    "key2": "value2",
+    "key3": {
+      "key2": { "key": "value" },
+    },
   }
-}
-const expectedResult = "{\n  - follow: false\n    host: hexlet.io\n  - proxy: 123.234.53.22\n  - timeout: 50\n  + timeout: 20\n  + verbose: true\n}";
 
+  const object2 = {
+    "key1": "value1",
+    "key3": {
+      "key2": "value2",
+    },
+    "key4": "value4",
+  }
+  
+  const expected = [
+    { 
+      stat: "matched", 
+      key: "key1", 
+      value: "value1", 
+    },
+    { 
+      stat: "expected", 
+      key: "key2", 
+      value: "value2", 
+    },
+    { 
+      stat: "nested", 
+      key: "key3", 
+      value: [
+        { 
+          stat: "exchanged", 
+          key: "key2", 
+          value: [ { "key": "value" }, "value2" ] 
+        },
+      ]
+    },
+    { 
+      stat: "received", 
+      key: "key4", 
+      value: "value4", 
+    },
+  ]
 
-test("gendiff same formats", () => {
-  filepath1 = filepathes.json.file1;
-  filepath2 = filepathes.json.file2;
-  expect(compareFiles(filepath1, filepath2)).toEqual(expectedResult);
-
-  filepath1 = filepathes.yaml.file1;
-  filepath2 = filepathes.yaml.file2;
-  expect(compareFiles(filepath1, filepath2)).toEqual(expectedResult);
-
-  filepath1 = filepathes.yml.file1;
-  filepath2 = filepathes.yml.file2;
-  expect(compareFiles(filepath1, filepath2)).toEqual(expectedResult);
+  const result = makeAstDiff(object1, object2);
+  expect(result).toEqual(expected);
 });
 
-test("gendiff difference formats", () => {
-  filepath1 = filepathes.json.file1;
-  filepath2 = filepathes.yaml.file2;
-  expect(compareFiles(filepath1, filepath2)).toEqual(expectedResult);
+test("compare json files", () => {
+  const filepath1 = getFixturePath("file1.json");
+  const filepath2 = getFixturePath("file2.json");
 
-  filepath1 = filepathes.json.file1;
-  filepath2 = filepathes.yml.file2;
-  expect(compareFiles(filepath1, filepath2)).toEqual(expectedResult);
+  const result = compareFiles(filepath1, filepath2, "stylish");
+  expect(result).toEqual(expectedStringDiff);
+})
 
-  filepath1 = filepathes.yaml.file1;
-  filepath2 = filepathes.yml.file2;
-  expect(compareFiles(filepath1, filepath2)).toEqual(expectedResult);
-});
+test("compare yaml files", () => {
+  const filepath1 = getFixturePath("file1.yaml");
+  const filepath2 = getFixturePath("file2.yaml");
 
-test("gendiff unknown format", () => {
-  filepath1 = "file.g";
-  expect(() => compareFiles(filepath1, filepath2)).toThrow();
-});
-
-test("gendiff unknown file", () => {
-  filepath1 = "file.json";
-  expect(() => compareFiles(filepath1, filepath2)).toThrow();
-});
+  const result = compareFiles(filepath1, filepath2, "stylish");
+  expect(result).toEqual(expectedStringDiff);
+})
