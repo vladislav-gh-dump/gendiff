@@ -11,7 +11,7 @@ import compareFiles from "../src/index.js";
 const __dirname = path.join(process.cwd(), "__tests__");
 const getFixturePath = (filename) => path.join(__dirname, "..", "__fixtures__", filename);
 
-const expectedStringDiff = `{
+const expectedStylishDiff = `{
     common: {
       + follow: false
         setting1: Value 1
@@ -54,7 +54,19 @@ const expectedStringDiff = `{
         }
         fee: 100500
     }
-}`
+}`;
+
+const expectedPlainDiff = `Property 'common.follow' was added with value: false
+Property 'common.setting2' was removed
+Property 'common.setting3' was updated. From true to null
+Property 'common.setting4' was added with value: 'blah blah'
+Property 'common.setting5' was added with value: [complex value]
+Property 'common.setting6.doge.wow' was updated. From '' to 'so much'
+Property 'common.setting6.ops' was added with value: 'vops'
+Property 'group1.baz' was updated. From 'bas' to 'bars'
+Property 'group1.nest' was updated. From [complex value] to 'str'
+Property 'group2' was removed
+Property 'group3' was added with value: [complex value]`;
 
 test("make ast diff", () => {
   const object1 = {
@@ -110,14 +122,20 @@ test("compare json files", () => {
   const filepath1 = getFixturePath("file1.json");
   const filepath2 = getFixturePath("file2.json");
 
-  const result = compareFiles(filepath1, filepath2, "stylish");
-  expect(result).toEqual(expectedStringDiff);
+  const stylishResult = compareFiles(filepath1, filepath2, "stylish");
+  expect(stylishResult).toEqual(expectedStylishDiff);
+
+  const plainResult = compareFiles(filepath1, filepath2, "plain");
+  expect(plainResult).toEqual(expectedPlainDiff);
 })
 
 test("compare yaml files", () => {
   const filepath1 = getFixturePath("file1.yaml");
   const filepath2 = getFixturePath("file2.yaml");
 
-  const result = compareFiles(filepath1, filepath2, "stylish");
-  expect(result).toEqual(expectedStringDiff);
+  const stylishResult = compareFiles(filepath1, filepath2, "stylish");
+  expect(stylishResult).toEqual(expectedStylishDiff);
+
+  const plainResult = compareFiles(filepath1, filepath2, "plain");
+  expect(plainResult).toEqual(expectedPlainDiff);
 })
