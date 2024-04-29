@@ -1,1 +1,1 @@
-export default (astDiff) => JSON.stringify(astDiff, null, 2);
+export default (tree) => JSON.stringify(tree, null, 2);

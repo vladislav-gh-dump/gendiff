@@ -1,6 +1,7 @@
-import { getParser } from "./parsers.js";
 import buildTree from "./buildTree.js";
-import composeDiff from "./formatters/index.js";
+
+import { getParser } from "./parsers.js";
+import { getFormatter } from "./formatters/index.js";
 import { readFile, getFileExt } from "./utils.js";
 
 const parseFile = (filepath) => {
@@ -10,6 +11,15 @@ const parseFile = (filepath) => {
     
     const parser = getParser(fileExt);
     return parser(fileData);
+  } catch (e) {
+    console.error(e.message);
+  }
+}
+
+const composeDiff = (tree, formatName) => {
+  try {
+    const formatter = getFormatter(formatName);
+    return formatter(tree);
   } catch (e) {
     console.error(e.message);
   }

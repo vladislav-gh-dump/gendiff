@@ -1,28 +1,17 @@
-import composeStylishDiff from "./stylish.js";
-import composePlainDiff from "./plain.js";
-import composeJsonDiff from "./json.js";
+import _ from "lodash";
+import composeStylishTree from "./stylish.js";
+import composePlainTree from "./plain.js";
+import composeJsonTree from "./json.js";
 
+const formatters = {
+  stylish: composeStylishTree,
+  plain: composePlainTree,
+  json: composeJsonTree
+}
 
-const getFormatter = (formatName) => {
-  switch (formatName) {
-    case "stylish":
-      return composeStylishDiff;
-    case "plain":
-      return composePlainDiff;
-    case "json":
-      return composeJsonDiff;
+export const getFormatter = (formatName) => {
+  if (!(_.has(formatters, formatName))) {
+    throw new Error(`Cannot get formatter ${formatName}`);
   }
-};
-
-const composeDiff = (astDiff, formatName) => {
-  const formatter = getFormatter(formatName);
-  return formatter(astDiff);
-};
-
-export default (astDiff, formatName) => {
-  try {
-    return composeDiff(astDiff, formatName);
-  } catch (e) {
-    throw new Error(`Cannot compose diff: ${e}`);
-  }
+  return formatters[formatName];
 };

@@ -1,10 +1,7 @@
 import _ from "lodash";
 
-
 const composeIndent = (depth, spacesCount, offset) => " ".repeat((depth * spacesCount) - offset);
-
 const composeItem = (separator, key, value) => `${separator} ${key}: ${value}`;
-
 const composeObject = (items, indent) => `{\n${items.join("\n")}\n${indent}}`;
 
 const stringify = (value, depth) => {
@@ -13,66 +10,41 @@ const stringify = (value, depth) => {
   }
 
   const indentLines = composeIndent(depth, 4, 2);
-  const indentBrackets = composeIndent(depth, 4, 4);
-
-  const separator = `${indentLines} `;
   const items = Object
     .entries(value)
-    .map(([ key, value ]) => {
-      const stringValue = stringify(value, depth + 1);
-      return composeItem(separator, key, stringValue);
-    })
+    .map(([ key, value ]) => composeItem(`${indentLines} `, key, stringify(value, depth + 1)));
   
+  const indentBrackets = composeIndent(depth, 4, 4);
   return composeObject(items, indentBrackets);
 };
 
-export default (astDiff) => {
-  const iter = (currentAstDiff, depth) => {
+const composeStylishTree = (tree) => {
+  const iter = (currentTree, depth) => {
     const indentLines = composeIndent(depth, 4, 2);
-    const indentBrackets = composeIndent(depth, 4, 4);
-
-    let separator, stringValue;
-    const items = currentAstDiff
+    const items = currentTree
       .map(({ stat, key, value }) => {
-        stringValue = stringify(value, depth + 1);
-
         switch (stat) {
           case "matched":
-            separator = `${indentLines} `;
-            break;
-    
+            return composeItem(`${indentLines} `, key, stringify(value, depth + 1));
           case "expected":
-            separator = `${indentLines}-`;
-            break;
-    
+            return composeItem(`${indentLines}-`, key, stringify(value, depth + 1));
           case "received":
-            separator = `${indentLines}+`;
-            break;
-
+            return composeItem(`${indentLines}+`, key, stringify(value, depth + 1));
           case "nested":
-            separator = `${indentLines} `;
-            stringValue = iter(value, depth + 1);
-            break;
-
+            return composeItem(`${indentLines} `, key, iter(value, depth + 1));
           case "exchanged":
             const [ value1, value2 ] = value;
-            
-            separator = `${indentLines}-`;
-            stringValue = stringify(value1, depth + 1);
-            const item1 = composeItem(separator, key, stringValue);
-
-            separator = `${indentLines}+`;
-            stringValue = stringify(value2, depth + 1);
-            const item2 = composeItem(separator, key, stringValue);
-            
+            const item1 = composeItem(`${indentLines}-`, key, stringify(value1, depth + 1));
+            const item2 = composeItem(`${indentLines}+`, key, stringify(value2, depth + 1));
             return `${item1}\n${item2}`;
         }
-
-        return composeItem(separator, key, stringValue);
       })
-
+    
+    const indentBrackets = composeIndent(depth, 4, 4);
     return composeObject(items, indentBrackets);
   }
   
-  return iter(astDiff, 1);
+  return iter(tree, 1);
 };
+
+export default composeStylishTree;
