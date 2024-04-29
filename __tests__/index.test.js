@@ -192,8 +192,8 @@ const expectedDiffs = [ expectedStylishDiff, expectedPlainDiff, expectedJsonDiff
 
 describe("test gendiff", () => {
   exts.forEach((ext) => {
-    const filepath1 = getFixturePath(`file1.${ext}`);
-    const filepath2 = getFixturePath(`file2.${ext}`);
+    const filepath1 = getFixturePath(`nested/file1.${ext}`);
+    const filepath2 = getFixturePath(`nested/file2.${ext}`);
 
     formats.forEach((format, index) => {
       const expectedDiff = expectedDiffs[index];
