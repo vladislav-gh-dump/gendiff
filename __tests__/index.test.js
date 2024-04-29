@@ -184,38 +184,24 @@ const expectedJsonDiff = `[
       "fee": 100500
     }
   }
-]`
+]`;
 
-describe("compare files", () => {
-  const jsonFilepath1 = getFixturePath("file1.json");
-  const jsonFilepath2 = getFixturePath("file2.json");
+const exts = [ "json", "yaml" ];
+const formats = [ "stylish", "plain", "json" ];
+const expectedDiffs = [ expectedStylishDiff, expectedPlainDiff, expectedJsonDiff ];
 
-  const yamlFilepath1 = getFixturePath("file1.yaml");
-  const yamlFilepath2 = getFixturePath("file2.yaml");
+describe("test gendiff", () => {
+  exts.forEach((ext) => {
+    const filepath1 = getFixturePath(`file1.${ext}`);
+    const filepath2 = getFixturePath(`file2.${ext}`);
 
-  let result;
+    formats.forEach((format, index) => {
+      const expectedDiff = expectedDiffs[index];
 
-  test("format stylish", () => {  
-    result = compareFiles(jsonFilepath1, jsonFilepath2, "stylish");
-    expect(result).toEqual(expectedStylishDiff);
-
-    result = compareFiles(yamlFilepath1, yamlFilepath2, "stylish");
-    expect(result).toEqual(expectedStylishDiff);
-  })
-
-  test("format plain", () => { 
-    result = compareFiles(jsonFilepath1, jsonFilepath2, "plain");
-    expect(result).toEqual(expectedPlainDiff);
-
-    result = compareFiles(yamlFilepath1, yamlFilepath2, "plain");
-    expect(result).toEqual(expectedPlainDiff);
-  })
-
-  test("format json", () => { 
-    result = compareFiles(jsonFilepath1, jsonFilepath2, "json");
-    expect(result).toEqual(expectedJsonDiff);
-
-    result = compareFiles(yamlFilepath1, yamlFilepath2, "json");
-    expect(result).toEqual(expectedJsonDiff);
+      test(`format ${format}, extension ${ext}`, () => {
+        const result = compareFiles(filepath1, filepath2, format);
+        expect(result).toEqual(expectedDiff);
+      })
+    })
   })
 });
