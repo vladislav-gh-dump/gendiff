@@ -1,15 +1,12 @@
-// import url from "url";
 import path from "path";
-import process from "process";
 
 import makeAstDiff from "../src/ast.js";
 import compareFiles from "../src/index.js";
 
-// const __filename = url.fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
 
 const __dirname = path.join(process.cwd(), "__tests__");
 const getFixturePath = (filename) => path.join(__dirname, "..", "__fixtures__", filename);
+
 
 const expectedStylishDiff = `{
     common: {
@@ -67,6 +64,132 @@ Property 'group1.baz' was updated. From 'bas' to 'bars'
 Property 'group1.nest' was updated. From [complex value] to 'str'
 Property 'group2' was removed
 Property 'group3' was added with value: [complex value]`;
+
+const expectedJsonDiff = `[
+  {
+    "stat": "nested",
+    "key": "common",
+    "value": [
+      {
+        "stat": "received",
+        "key": "follow",
+        "value": false
+      },
+      {
+        "stat": "matched",
+        "key": "setting1",
+        "value": "Value 1"
+      },
+      {
+        "stat": "expected",
+        "key": "setting2",
+        "value": 200
+      },
+      {
+        "stat": "exchanged",
+        "key": "setting3",
+        "value": [
+          true,
+          null
+        ]
+      },
+      {
+        "stat": "received",
+        "key": "setting4",
+        "value": "blah blah"
+      },
+      {
+        "stat": "received",
+        "key": "setting5",
+        "value": {
+          "key5": "value5"
+        }
+      },
+      {
+        "stat": "nested",
+        "key": "setting6",
+        "value": [
+          {
+            "stat": "nested",
+            "key": "doge",
+            "value": [
+              {
+                "stat": "exchanged",
+                "key": "wow",
+                "value": [
+                  "",
+                  "so much"
+                ]
+              }
+            ]
+          },
+          {
+            "stat": "matched",
+            "key": "key",
+            "value": "value"
+          },
+          {
+            "stat": "received",
+            "key": "ops",
+            "value": "vops"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stat": "nested",
+    "key": "group1",
+    "value": [
+      {
+        "stat": "exchanged",
+        "key": "baz",
+        "value": [
+          "bas",
+          "bars"
+        ]
+      },
+      {
+        "stat": "matched",
+        "key": "foo",
+        "value": "bar"
+      },
+      {
+        "stat": "exchanged",
+        "key": "nest",
+        "value": [
+          {
+            "key": "value"
+          },
+          "str"
+        ]
+      }
+    ]
+  },
+  {
+    "stat": "expected",
+    "key": "group2",
+    "value": {
+      "abc": 12345,
+      "deep": {
+        "id": 45
+      }
+    }
+  },
+  {
+    "stat": "received",
+    "key": "group3",
+    "value": {
+      "deep": {
+        "id": {
+          "number": 45
+        }
+      },
+      "fee": 100500
+    }
+  }
+]`
+
 
 test("make ast diff", () => {
   const object1 = {
@@ -127,6 +250,9 @@ test("compare json files", () => {
 
   const plainResult = compareFiles(filepath1, filepath2, "plain");
   expect(plainResult).toEqual(expectedPlainDiff);
+
+  const jsonResult = compareFiles(filepath1, filepath2, "json");
+  expect(jsonResult).toEqual(expectedJsonDiff);
 })
 
 test("compare yaml files", () => {
@@ -138,4 +264,7 @@ test("compare yaml files", () => {
 
   const plainResult = compareFiles(filepath1, filepath2, "plain");
   expect(plainResult).toEqual(expectedPlainDiff);
+
+  const jsonResult = compareFiles(filepath1, filepath2, "json");
+  expect(jsonResult).toEqual(expectedJsonDiff);
 })
