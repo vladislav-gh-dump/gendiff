@@ -1,10 +1,9 @@
 import fs from "fs";
 import path from "path";
 
+const composeAbsFilepath = (filepath) => path.resolve(process.cwd(), filepath);
 
-const composeAbsoluteFilePath = (filepath) => path.resolve(process.cwd(), filepath);
+const readFile = (filepath) => fs.readFileSync(composeAbsFilepath(filepath));
+const getFileExt = (filepath) => path.extname(filepath).split(".")[1];
 
-const readFile = (filepath) => fs.readFileSync(composeAbsoluteFilePath(filepath));
-const getFileExtension = (filepath) => path.extname(filepath).split(".")[1];
-
-export { readFile, getFileExtension };
+export { readFile, getFileExt };
