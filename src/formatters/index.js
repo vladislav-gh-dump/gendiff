@@ -1,5 +1,6 @@
 import composeStylishDiff from "./stylish.js";
 import composePlainDiff from "./plain.js";
+import composeJsonDiff from "./json.js";
 
 
 const getFormatter = (formatName) => {
@@ -8,6 +9,8 @@ const getFormatter = (formatName) => {
       return composeStylishDiff;
     case "plain":
       return composePlainDiff;
+    case "json":
+      return composeJsonDiff;
   }
 };
 
