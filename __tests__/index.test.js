@@ -1,6 +1,6 @@
 import path from "path";
 
-import makeAstDiff from "../src/ast.js";
+import buildTree from "../src/buildTree.js";
 import compareFiles from "../src/index.js";
 
 
@@ -191,7 +191,7 @@ const expectedJsonDiff = `[
 ]`
 
 
-test("make ast diff", () => {
+test("build tree", () => {
   const object1 = {
     "key1": "value1",
     "key2": "value2",
@@ -237,7 +237,7 @@ test("make ast diff", () => {
     },
   ]
 
-  const result = makeAstDiff(object1, object2);
+  const result = buildTree(object1, object2);
   expect(result).toEqual(expected);
 });
 
