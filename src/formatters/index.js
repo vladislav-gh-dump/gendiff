@@ -1,9 +1,13 @@
 import composeStylishDiff from "./stylish.js";
+import composePlainDiff from "./plain.js";
+
 
 const getFormatter = (formatName) => {
   switch (formatName) {
     case "stylish":
       return composeStylishDiff;
+    case "plain":
+      return composePlainDiff;
   }
 };
 
