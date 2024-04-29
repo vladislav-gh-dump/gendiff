@@ -1,12 +1,8 @@
 import path from "path";
-
-import buildTree from "../src/buildTree.js";
 import compareFiles from "../src/index.js";
-
 
 const __dirname = path.join(process.cwd(), "__tests__");
 const getFixturePath = (filename) => path.join(__dirname, "..", "__fixtures__", filename);
-
 
 const expectedStylishDiff = `{
     common: {
@@ -190,81 +186,36 @@ const expectedJsonDiff = `[
   }
 ]`
 
+describe("compare files", () => {
+  const jsonFilepath1 = getFixturePath("file1.json");
+  const jsonFilepath2 = getFixturePath("file2.json");
 
-test("build tree", () => {
-  const object1 = {
-    "key1": "value1",
-    "key2": "value2",
-    "key3": {
-      "key2": { "key": "value" },
-    },
-  }
+  const yamlFilepath1 = getFixturePath("file1.yaml");
+  const yamlFilepath2 = getFixturePath("file2.yaml");
 
-  const object2 = {
-    "key1": "value1",
-    "key3": {
-      "key2": "value2",
-    },
-    "key4": "value4",
-  }
-  
-  const expected = [
-    { 
-      stat: "matched", 
-      key: "key1", 
-      value: "value1", 
-    },
-    { 
-      stat: "expected", 
-      key: "key2", 
-      value: "value2", 
-    },
-    { 
-      stat: "nested", 
-      key: "key3", 
-      value: [
-        { 
-          stat: "exchanged", 
-          key: "key2", 
-          value: [ { "key": "value" }, "value2" ] 
-        },
-      ]
-    },
-    { 
-      stat: "received", 
-      key: "key4", 
-      value: "value4", 
-    },
-  ]
+  let result;
 
-  const result = buildTree(object1, object2);
-  expect(result).toEqual(expected);
+  test("format stylish", () => {  
+    result = compareFiles(jsonFilepath1, jsonFilepath2, "stylish");
+    expect(result).toEqual(expectedStylishDiff);
+
+    result = compareFiles(yamlFilepath1, yamlFilepath2, "stylish");
+    expect(result).toEqual(expectedStylishDiff);
+  })
+
+  test("format plain", () => { 
+    result = compareFiles(jsonFilepath1, jsonFilepath2, "plain");
+    expect(result).toEqual(expectedPlainDiff);
+
+    result = compareFiles(yamlFilepath1, yamlFilepath2, "plain");
+    expect(result).toEqual(expectedPlainDiff);
+  })
+
+  test("format json", () => { 
+    result = compareFiles(jsonFilepath1, jsonFilepath2, "json");
+    expect(result).toEqual(expectedJsonDiff);
+
+    result = compareFiles(yamlFilepath1, yamlFilepath2, "json");
+    expect(result).toEqual(expectedJsonDiff);
+  })
 });
-
-test("compare json files", () => {
-  const filepath1 = getFixturePath("file1.json");
-  const filepath2 = getFixturePath("file2.json");
-
-  const stylishResult = compareFiles(filepath1, filepath2, "stylish");
-  expect(stylishResult).toEqual(expectedStylishDiff);
-
-  const plainResult = compareFiles(filepath1, filepath2, "plain");
-  expect(plainResult).toEqual(expectedPlainDiff);
-
-  const jsonResult = compareFiles(filepath1, filepath2, "json");
-  expect(jsonResult).toEqual(expectedJsonDiff);
-})
-
-test("compare yaml files", () => {
-  const filepath1 = getFixturePath("file1.yaml");
-  const filepath2 = getFixturePath("file2.yaml");
-
-  const stylishResult = compareFiles(filepath1, filepath2, "stylish");
-  expect(stylishResult).toEqual(expectedStylishDiff);
-
-  const plainResult = compareFiles(filepath1, filepath2, "plain");
-  expect(plainResult).toEqual(expectedPlainDiff);
-
-  const jsonResult = compareFiles(filepath1, filepath2, "json");
-  expect(jsonResult).toEqual(expectedJsonDiff);
-})
