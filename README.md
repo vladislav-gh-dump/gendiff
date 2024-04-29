@@ -10,13 +10,83 @@
 **«Вычислитель отличий»** — программа, определяющая разницу между двумя структурами данных. Это популярная задача, для решения которой существует множество онлайн сервисов, например http://www.jsondiff.com/. Подобный механизм используется при выводе тестов или при автоматическом отслеживании изменений в конфигурационных файлах.
 
 ## Возможности утилиты
- - Поддержка разных входных форматов: yaml, json
- - Генерация отчета в виде plain text, stylish и json
+ - Поддержка разных входных форматов: `yaml`, `yml`, `json`
+ - Генерация отчета в виде `plain`, `stylish` и `json`
 
-## Пример использования
+## Установка
+1. Клонирование репозитория
+   
+    ```bash
+    $ git clone https://github.com/vladislav-gh-dump/frontend-project-46.git
+    ```
 
-[![asciicast](https://asciinema.org/a/xeLTTv6JN5MYz9A3KybWchi1v.svg)](https://asciinema.org/a/xeLTTv6JN5MYz9A3KybWchi1v)
+2. Переход в директорию проекта
+   
+    ```bash
+    $ cd frontend-project-46
+    ```
 
-[![asciicast](https://asciinema.org/a/t37yXVeVVFiCv5H8Ii4gtEwmD.svg)](https://asciinema.org/a/t37yXVeVVFiCv5H8Ii4gtEwmD)
+3. Установка необходимых модулей
+   
+    ```bash
+    $ npm ci
+    ```
+   или
 
-[![asciicast](https://asciinema.org/a/FMislawnzqslVNyiQNJZXdE5C.svg)](https://asciinema.org/a/FMislawnzqslVNyiQNJZXdE5C)
+    ```bash
+    $ make install
+    ```
+
+4. Установка пакета в систему
+   
+    ```bash
+    $ npm link
+    ```
+
+## Использование
+ - Получение справочной информации. 
+  
+    ```bash
+    $ gendiff -h
+
+    Usage: gendiff [options] <filepath1> <filepath2>
+
+    Compares two configuration files and shows a difference. 
+
+    Options:
+    -V, --version        output the version number
+    -f, --format [type]  format output (default: "stylish")
+    -h, --help           display help for command
+    ```
+
+ - Определение разницы между двумя структурами данных (по-умолчанию формат вывода `stylish`)
+
+    ```bash
+    # формат stylish
+    $ gendiff --format stylish filepath1 filepath2
+
+    # тоже формат stylish
+    $ gendiff filepath1 filepath2
+
+    # формат plain
+    gendiff --format plain filepath1 filepath2
+    
+    # формат json
+    gendiff --format json filepath1 filepath2
+    ```
+
+## Примеры
+### Простые структуры
+[![asciicast](https://asciinema.org/a/EHTG7h9TC6biuz5OvpNHWo2pk.svg)](https://asciinema.org/a/EHTG7h9TC6biuz5OvpNHWo2pk)
+
+### Вложенные структуры
+[![asciicast](https://asciinema.org/a/YnAebrI2kcJTE2AqbrOJbd49P.svg)](https://asciinema.org/a/YnAebrI2kcJTE2AqbrOJbd49P)
+
+### Формат `plain`
+[![asciicast](https://asciinema.org/a/C2WsJ64GILh8IZDHfhajpi6WN.svg)](https://asciinema.org/a/C2WsJ64GILh8IZDHfhajpi6WN)
+
+### Формат `json`
+[![asciicast](https://asciinema.org/a/vYHbrVW9L5thX3qdSQ28Gags3.svg)](https://asciinema.org/a/vYHbrVW9L5thX3qdSQ28Gags3)
+
+### Структуры с разным синтаксисом
+[![asciicast](https://asciinema.org/a/4450j44Rm7gRTiV1SJaFVGaZt.svg)](https://asciinema.org/a/4450j44Rm7gRTiV1SJaFVGaZt)
