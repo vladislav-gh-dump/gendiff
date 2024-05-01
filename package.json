@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "hexlet project-2",
+  "description": "program for comparing two data structures",
   "type": "module",
   "main": "./src/index.js",
   "bin": {
