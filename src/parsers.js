@@ -9,7 +9,7 @@ const parsers = {
 
 export const getParser = (fileExt) => {
   if (!(_.has(parsers, fileExt))) {
-    throw new Error(`Cannot get parser for ${fileExt}`);
+    throw new Error(`Cannot get parser for "${fileExt}"`);
   }
   return parsers[fileExt];
 };

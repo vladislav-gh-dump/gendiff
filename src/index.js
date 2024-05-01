@@ -12,7 +12,7 @@ const parseFile = (filepath) => {
     const parser = getParser(fileExt);
     return parser(fileData);
   } catch (e) {
-    console.error(e.message);
+    throw new Error(`Cannot parse file "${filepath}"`);
   }
 }
 
@@ -21,7 +21,7 @@ const composeDiff = (tree, formatName) => {
     const formatter = getFormatter(formatName);
     return formatter(tree);
   } catch (e) {
-    console.error(e.message);
+    throw new Error(`Cannot compose diff "${tree}" to format "${formatName}"`);
   }
 }
 
