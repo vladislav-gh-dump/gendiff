@@ -10,8 +10,8 @@ const formatters = {
 }
 
 export const getFormatter = (formatName) => {
-  if (!(_.has(formatters, formatName))) {
-    throw new Error(`Cannot get formatter "${formatName}"`);
-  }
+  // if (!(_.has(formatters, formatName))) {
+  //   throw new Error(`Cannot get formatter "${formatName}"`);
+  // }
   return formatters[formatName];
 };
