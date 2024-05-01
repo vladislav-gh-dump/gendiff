@@ -10,4 +10,4 @@ const readFile = (filepath, encoding = "utf8") => {
 
 const getFileExt = (filepath) => path.extname(filepath).split(".")[1];
 
-export { readFile, getFileExt };
+export { composeAbsFilepath, readFile, getFileExt };
