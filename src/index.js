@@ -4,7 +4,7 @@ import { getParser } from "./parsers.js";
 import { getFormatter } from "./formatters/index.js";
 import { readFile, getFileExt } from "./utils.js";
 
-const parseFile = (filepath) => {
+const getData = (filepath) => {
   const fileExt = getFileExt(filepath);
   const fileData = readFile(filepath);
     
@@ -18,8 +18,8 @@ const composeDiff = (tree, formatName) => {
 }
 
 const genDiff = (filepath1, filepath2, formatName) => {
-  const object1 = parseFile(filepath1);
-  const object2 = parseFile(filepath2);
+  const object1 = getData(filepath1);
+  const object2 = getData(filepath2);
 
   const tree = buildTree(object1, object2);
   return composeDiff(tree, formatName);
