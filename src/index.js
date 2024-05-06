@@ -5,24 +5,16 @@ import { getFormatter } from "./formatters/index.js";
 import { readFile, getFileExt } from "./utils.js";
 
 const parseFile = (filepath) => {
-  try {
-    const fileExt = getFileExt(filepath);
-    const fileData = readFile(filepath);
+  const fileExt = getFileExt(filepath);
+  const fileData = readFile(filepath);
     
-    const parser = getParser(fileExt);
-    return parser(fileData);
-  } catch (e) {
-    throw new Error(`Cannot parse file "${filepath}"`);
-  }
+  const parser = getParser(fileExt);
+  return parser(fileData);
 }
 
 const composeDiff = (tree, formatName) => {
-  try {
-    const formatter = getFormatter(formatName);
-    return formatter(tree);
-  } catch (e) {
-    throw new Error(`Cannot compose diff "${tree}" to format "${formatName}"`);
-  }
+  const formatter = getFormatter(formatName);
+  return formatter(tree);
 }
 
 const genDiff = (filepath1, filepath2, formatName) => {
