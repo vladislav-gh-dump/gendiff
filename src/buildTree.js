@@ -17,7 +17,7 @@ const getItem = (object1, object2, key) => {
     }
   }
 
-  if (_.isObject(object1[key]) && _.isObject(object2[key])) {
+  if (_.isPlainObject(object1[key]) && _.isPlainObject(object2[key])) {
     const tree = buildTree(object1[key], object2[key]);
     return {
       stat: "nested",
