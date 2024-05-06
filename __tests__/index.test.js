@@ -1,7 +1,7 @@
 import path from 'path';
 import { composeAbsFilepath, readFile } from '../src/utils.js';
-import { getFormatter } from '../src/formatters/index.js';
-import { getParser } from '../src/parsers.js';
+import getFormatter from '../src/formatters/index.js';
+import getParser from '../src/parsers.js';
 import compareFiles from '../src/index.js';
 
 const __dirname = composeAbsFilepath('__tests__');

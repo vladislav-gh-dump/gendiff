@@ -1,12 +1,10 @@
 import _ from 'lodash';
 
 const composeIndent = (depth, spacesCount = 4, offset = 2) => ' '.repeat((depth * spacesCount) - offset);
-
 const stringify = (value, depth) => {
   if (!(_.isObject(value))) {
     return `${value}`;
   }
-
   const indentLines = composeIndent(depth);
   const items = Object
     .entries(value)
@@ -16,7 +14,7 @@ const stringify = (value, depth) => {
   return `{\n${items.join('\n')}\n${indentBrackets}}`;
 };
 
-const composeStylishTree = (tree) => {
+export default (tree) => {
   const iter = (currentTree, depth) => {
     const indentLines = composeIndent(depth);
     const items = currentTree
@@ -37,12 +35,8 @@ const composeStylishTree = (tree) => {
             return `${itemFrom}\n${itemTo}`;
         }
       });
-
     const indentBrackets = composeIndent(depth, 4, 4);
     return `{\n${items.join('\n')}\n${indentBrackets}}`;
   };
-
   return iter(tree, 1);
 };
-
-export default composeStylishTree;

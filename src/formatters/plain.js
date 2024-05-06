@@ -3,7 +3,7 @@ import _ from 'lodash';
 const composeComplexValue = (value) => (_.isObject(value) ? '[complex value]' : value);
 const composeValue = (value) => (_.isString(value) ? `'${value}'` : composeComplexValue(value));
 
-const composePlainTree = (tree) => {
+export default (tree) => {
   const iter = (currentTree, chainKeys) => {
     const lines = currentTree
       .flatMap(({ stat, key, value }) => {
@@ -22,11 +22,7 @@ const composePlainTree = (tree) => {
             return `Property '${chainKeys}${key}' was updated. ${stringValues}`;
         }
       });
-
     return lines.join('\n');
   };
-
   return iter(tree, '');
 };
-
-export default composePlainTree;

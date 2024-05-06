@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import genDiff from '@hexlet/code';
+import genDiff from '../src/index.js';
 
 const program = new Command();
 

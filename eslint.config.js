@@ -47,6 +47,11 @@ export default [
       'import/no-named-as-default-member': 'off',
       'no-console': 'off',
       'import/no-extraneous-dependencies': 'off',
+      'no-case-declarations': 'off',
+      'no-shadow': 'off',
+      'default-case': 'off',
+      'array-callback-return': 'off',
+      'consistent-return': 'off',
     },
   },
 ];

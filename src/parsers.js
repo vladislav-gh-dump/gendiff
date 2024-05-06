@@ -7,7 +7,7 @@ const parsers = {
   yml: yaml.load,
 };
 
-export const getParser = (fileExt) => {
+export default (fileExt) => {
   if (!(_.has(parsers, fileExt))) {
     throw new Error(`Cannot get parser for "${fileExt}"`);
   }
