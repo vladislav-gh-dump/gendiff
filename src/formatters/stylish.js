@@ -35,9 +35,10 @@ export default (tree) => {
         if (stat === 'exchanged') {
           const { values } = node;
           const { from: valueFrom, to: valueTo } = values;
-          const itemFrom = `${indentLines}${getMarker('expected')} ${key}: ${stringify(valueFrom, depth + 1)}`;
-          const itemTo = `${indentLines}${getMarker('received')} ${key}: ${stringify(valueTo, depth + 1)}`;
-          return `${itemFrom}\n${itemTo}`;
+          return [
+            `${indentLines}${getMarker('expected')} ${key}: ${stringify(valueFrom, depth + 1)}`,
+            `${indentLines}${getMarker('received')} ${key}: ${stringify(valueTo, depth + 1)}`,
+          ].join('\n');
         }
         if (stat === 'nested') {
           const { children } = node;

@@ -26,8 +26,10 @@ export default (tree) => {
           case 'exchanged': {
             const { values } = node;
             const { from: valueFrom, to: valueTo } = values;
-            const stringValues = `From ${composeValue(valueFrom)} to ${composeValue(valueTo)}`;
-            return `Property '${chainKeys}${key}' was updated. ${stringValues}`;
+            return [
+              `Property '${chainKeys}${key}' was updated.`,
+              `From ${composeValue(valueFrom)} to ${composeValue(valueTo)}`,
+            ].join(' ');
           }
           default: {
             throw new Error(`Unknown stat "${stat}"`);
