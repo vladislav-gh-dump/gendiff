@@ -17,8 +17,8 @@ const getItem = (object1, object2, key) => {
   const value2 = object2[key];
 
   if (_.isObject(value1) && _.isObject(value2)) {
-    const treeValue = buildTree(value1, value2);
-    return buildItem("nested", key, treeValue);
+    const tree = buildTree(value1, value2);
+    return buildItem("nested", key, tree);
   }
 
   if (value1 === value2) {
