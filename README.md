@@ -79,16 +79,16 @@
 
 ## Примеры
 ### Простые структуры
-[![asciicast](https://asciinema.org/a/EHTG7h9TC6biuz5OvpNHWo2pk.svg)](https://asciinema.org/a/EHTG7h9TC6biuz5OvpNHWo2pk)
+[![asciicast](https://asciinema.org/a/CkY73R3UuolcSV90e1xYIt0yX.svg)](https://asciinema.org/a/CkY73R3UuolcSV90e1xYIt0yX)
 
 ### Вложенные структуры
-[![asciicast](https://asciinema.org/a/YnAebrI2kcJTE2AqbrOJbd49P.svg)](https://asciinema.org/a/YnAebrI2kcJTE2AqbrOJbd49P)
+[![asciicast](https://asciinema.org/a/jqweOt0hWFILwwW1aGzcWnBlL.svg)](https://asciinema.org/a/jqweOt0hWFILwwW1aGzcWnBlL)
 
 ### Формат `plain`
-[![asciicast](https://asciinema.org/a/C2WsJ64GILh8IZDHfhajpi6WN.svg)](https://asciinema.org/a/C2WsJ64GILh8IZDHfhajpi6WN)
+[![asciicast](https://asciinema.org/a/xScvrUAZRV7chSkELUVV7sDzC.svg)](https://asciinema.org/a/xScvrUAZRV7chSkELUVV7sDzC)
 
 ### Формат `json`
-[![asciicast](https://asciinema.org/a/vYHbrVW9L5thX3qdSQ28Gags3.svg)](https://asciinema.org/a/vYHbrVW9L5thX3qdSQ28Gags3)
+[![asciicast](https://asciinema.org/a/0vDs7qK4WVuCBbwJUcMML4GOz.svg)](https://asciinema.org/a/0vDs7qK4WVuCBbwJUcMML4GOz)
 
 ### Структуры с разным синтаксисом
-[![asciicast](https://asciinema.org/a/4450j44Rm7gRTiV1SJaFVGaZt.svg)](https://asciinema.org/a/4450j44Rm7gRTiV1SJaFVGaZt)
+[![asciicast](https://asciinema.org/a/sLUP7BRuGTpksSkHxPTtP4u8j.svg)](https://asciinema.org/a/sLUP7BRuGTpksSkHxPTtP4u8j)
