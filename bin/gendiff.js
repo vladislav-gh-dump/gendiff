@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
-import compareFiles from "../src/index.js";
+import genDiff from "@hexlet/code";
 
 const program = new Command();
 
@@ -16,8 +16,8 @@ program
   .argument("<filepath2>")
   .action((filepath1, filepath2) => {
     const options = program.opts();
-    const compareResult = compareFiles(filepath1, filepath2, options.format);
-    console.log(compareResult);
+    const diff = genDiff(filepath1, filepath2, options.format);
+    console.log(diff);
   });
 
 program.parse();
