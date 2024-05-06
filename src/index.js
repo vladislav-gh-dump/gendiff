@@ -17,7 +17,7 @@ const composeDiff = (tree, formatName) => {
   return formatter(tree);
 }
 
-const genDiff = (filepath1, filepath2, formatName) => {
+const genDiff = (filepath1, filepath2, formatName = "stylish") => {
   const object1 = getData(filepath1);
   const object2 = getData(filepath2);
 
