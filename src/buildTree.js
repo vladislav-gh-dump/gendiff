@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 const buildTree = (object1, object2) => {
   const mergedObject = { ...object1, ...object2 };
-  const sortedKeys = _.keys(mergedObject).sort();
+  const sortedKeys = _.sortBy(_.keys(mergedObject));
 
   return sortedKeys
     .map((key) => {

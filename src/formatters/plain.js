@@ -8,18 +8,26 @@ export default (tree) => {
     const lines = currentTree
       .flatMap(({ stat, key, value }) => {
         switch (stat) {
-          case 'matched':
+          case 'matched': {
             return [];
-          case 'expected':
+          }
+          case 'expected': {
             return `Property '${chainKeys}${key}' was removed`;
-          case 'received':
+          }
+          case 'received': {
             return `Property '${chainKeys}${key}' was added with value: ${composeValue(value)}`;
-          case 'nested':
+          }
+          case 'nested': {
             return iter(value, `${chainKeys}${key}.`);
-          case 'exchanged':
+          }
+          case 'exchanged': {
             const [valueFrom, valueTo] = value;
             const stringValues = `From ${composeValue(valueFrom)} to ${composeValue(valueTo)}`;
             return `Property '${chainKeys}${key}' was updated. ${stringValues}`;
+          }
+          default: {
+            throw new Error(`Unknown stat "${stat}"`);
+          }
         }
       });
     return lines.join('\n');
