@@ -1,5 +1,17 @@
 import _ from 'lodash';
 
+const markers = {
+  matched: ' ',
+  expected: '-',
+  received: '+',
+};
+const getMarker = (stat) => {
+  if (!(_.has(markers, stat))) {
+    throw new Error(`Unknown stat "${stat}"`);
+  }
+  return markers[stat];
+};
+
 const composeIndent = (depth, spacesCount = 4, offset = 2) => ' '.repeat((depth * spacesCount) - offset);
 const stringify = (item, depth) => {
   if (!(_.isObject(item))) {
@@ -8,46 +20,31 @@ const stringify = (item, depth) => {
   const indentLines = composeIndent(depth);
   const items = Object
     .entries(item)
-    .map(([key, value]) => `${indentLines}  ${key}: ${stringify(value, depth + 1)}`);
+    .map(([key, value]) => `${indentLines}${getMarker('matched')} ${key}: ${stringify(value, depth + 1)}`);
 
   const indentBrackets = composeIndent(depth, 4, 4);
   return `{\n${items.join('\n')}\n${indentBrackets}}`;
 };
 
 export default (tree) => {
-  const iter = (currentTree, depth) => {
+  const iter = (currentNode, depth) => {
     const indentLines = composeIndent(depth);
-    const items = currentTree
+    const items = currentNode
       .map((node) => {
-        const { stat } = node;
-        switch (stat) {
-          case 'matched': {
-            const { key, value } = node;
-            return `${indentLines}  ${key}: ${stringify(value, depth + 1)}`;
-          }
-          case 'expected': {
-            const { key, value } = node;
-            return `${indentLines}- ${key}: ${stringify(value, depth + 1)}`;
-          }
-          case 'received': {
-            const { key, value } = node;
-            return `${indentLines}+ ${key}: ${stringify(value, depth + 1)}`;
-          }
-          case 'nested': {
-            const { key, children } = node;
-            return `${indentLines}  ${key}: ${iter(children, depth + 1)}`;
-          }
-          case 'exchanged': {
-            const { key, values } = node;
-            const { from: valueFrom, to: valueTo } = values;
-            const itemFrom = `${indentLines}- ${key}: ${stringify(valueFrom, depth + 1)}`;
-            const itemTo = `${indentLines}+ ${key}: ${stringify(valueTo, depth + 1)}`;
-            return `${itemFrom}\n${itemTo}`;
-          }
-          default: {
-            throw new Error(`Unknown stat "${stat}"`);
-          }
+        const { stat, key } = node;
+        if (stat === 'exchanged') {
+          const { values } = node;
+          const { from: valueFrom, to: valueTo } = values;
+          const itemFrom = `${indentLines}${getMarker('expected')} ${key}: ${stringify(valueFrom, depth + 1)}`;
+          const itemTo = `${indentLines}${getMarker('received')} ${key}: ${stringify(valueTo, depth + 1)}`;
+          return `${itemFrom}\n${itemTo}`;
         }
+        if (stat === 'nested') {
+          const { children } = node;
+          return `${indentLines}${getMarker('matched')} ${key}: ${iter(children, depth + 1)}`;
+        }
+        const { value } = node;
+        return `${indentLines}${getMarker(stat)} ${key}: ${stringify(value, depth + 1)}`;
       });
     const indentBrackets = composeIndent(depth, 4, 4);
     return `{\n${items.join('\n')}\n${indentBrackets}}`;
