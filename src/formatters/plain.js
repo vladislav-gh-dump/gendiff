@@ -13,15 +13,12 @@ const composePlainTree = (tree) => {
           case "expected":
             return `Property '${chainKeys}${key}' was removed`;
           case "received":
-            const stringValue = composeValue(value);
-            return `Property '${chainKeys}${key}' was added with value: ${stringValue}`;
+            return `Property '${chainKeys}${key}' was added with value: ${composeValue(value)}`;
           case "nested":
             return iter(value, `${chainKeys}${key}.`);
           case "exchanged":
             const [ valueFrom, valueTo ] = value;
-            const stringValueFrom = composeValue(valueFrom);
-            const stringValueTo = composeValue(valueTo);
-            const stringValues = `From ${stringValueFrom} to ${stringValueTo}`;
+            const stringValues = `From ${composeValue(valueFrom)} to ${composeValue(valueTo)}`;
             return `Property '${chainKeys}${key}' was updated. ${stringValues}`;
         }
       })
