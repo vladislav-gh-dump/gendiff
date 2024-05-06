@@ -18,22 +18,28 @@ export default (tree) => {
   const iter = (currentTree, depth) => {
     const indentLines = composeIndent(depth);
     const items = currentTree
-      .map(({ stat, key, value }) => {
+      .map((node) => {
+        const { stat } = node;
         switch (stat) {
           case 'matched': {
+            const { key, value } = node;
             return `${indentLines}  ${key}: ${stringify(value, depth + 1)}`;
           }
           case 'expected': {
+            const { key, value } = node;
             return `${indentLines}- ${key}: ${stringify(value, depth + 1)}`;
           }
           case 'received': {
+            const { key, value } = node;
             return `${indentLines}+ ${key}: ${stringify(value, depth + 1)}`;
           }
           case 'nested': {
-            return `${indentLines}  ${key}: ${iter(value, depth + 1)}`;
+            const { key, children } = node;
+            return `${indentLines}  ${key}: ${iter(children, depth + 1)}`;
           }
           case 'exchanged': {
-            const [valueFrom, valueTo] = value;
+            const { key, values } = node;
+            const { from: valueFrom, to: valueTo } = values;
             const itemFrom = `${indentLines}- ${key}: ${stringify(valueFrom, depth + 1)}`;
             const itemTo = `${indentLines}+ ${key}: ${stringify(valueTo, depth + 1)}`;
             return `${itemFrom}\n${itemTo}`;
