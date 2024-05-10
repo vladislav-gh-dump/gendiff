@@ -18,9 +18,9 @@ const composeDiff = (tree, formatName) => {
 };
 
 export default (filepath1, filepath2, formatName = 'stylish') => {
-  const object1 = getData(filepath1);
-  const object2 = getData(filepath2);
+  const data1 = getData(filepath1);
+  const data2 = getData(filepath2);
 
-  const tree = buildTree(object1, object2);
+  const tree = buildTree(data1, data2);
   return composeDiff(tree, formatName);
 };
