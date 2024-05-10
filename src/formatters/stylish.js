@@ -14,7 +14,7 @@ const getMarker = (stat) => {
 
 const composeIndent = (depth, spacesCount = 4, offset = 2) => ' '.repeat((depth * spacesCount) - offset);
 const stringify = (item, depth) => {
-  if (!(_.isObject(item))) {
+  if (!(_.isPlainObject(item))) {
     return `${item}`;
   }
   const indentLines = composeIndent(depth);
