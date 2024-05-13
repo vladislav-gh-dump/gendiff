@@ -6,7 +6,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/02b3b1e5fb5f8547a5a4/maintainability)](https://codeclimate.com/github/vladislav-gh-dump/frontend-project-46/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/02b3b1e5fb5f8547a5a4/test_coverage)](https://codeclimate.com/github/vladislav-gh-dump/frontend-project-46/test_coverage)
 
-Мой второй проект на Javascript - «Вычислитель отличий». Проект разработан в рамках обучения в [Hexlet](https://ru.hexlet.io/) на направлении [Frontend-разработчик](https://ru.hexlet.io/programs/frontend/).
+Мой второй проект - «Вычислитель отличий». Проект разработан в рамках обучения в [Hexlet](https://ru.hexlet.io/) на направлении [Frontend-разработчик](https://ru.hexlet.io/programs/frontend/).
 
 ## Описание
 **«Вычислитель отличий»** — программа, определяющая разницу между двумя структурами данных. Это популярная задача, для решения которой существует множество онлайн сервисов, например http://www.jsondiff.com/. Подобный механизм используется при выводе тестов или при автоматическом отслеживании изменений в конфигурационных файлах.
