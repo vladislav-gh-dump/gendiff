@@ -6,8 +6,6 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/02b3b1e5fb5f8547a5a4/maintainability)](https://codeclimate.com/github/vladislav-gh-dump/frontend-project-46/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/02b3b1e5fb5f8547a5a4/test_coverage)](https://codeclimate.com/github/vladislav-gh-dump/frontend-project-46/test_coverage)
 
-Мой второй проект - «Вычислитель отличий». 
-
 ## Описание
 **«Вычислитель отличий»** — программа, определяющая разницу между двумя структурами данных. Это популярная задача, для решения которой существует множество онлайн сервисов, например http://www.jsondiff.com/. Подобный механизм используется при выводе тестов или при автоматическом отслеживании изменений в конфигурационных файлах.
 
